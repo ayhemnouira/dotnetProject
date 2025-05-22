@@ -1,0 +1,48 @@
+﻿@model Client
+
+@{
+    ViewData["Title"] = "Détails du client";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Code
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CodeClt
+        </dd>
+        <dt class="col-sm-2">
+            Nom
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Nom
+        </dd>
+        <dt class="col-sm-2">
+            Prénom
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prenom
+        </dd>
+        <dt class="col-sm-2">
+            Adresse
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Adresse
+        </dd>
+        <dt class="col-sm-2">
+            Code Postal
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CP
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CodeClt" class="btn btn-warning">Modifier</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>

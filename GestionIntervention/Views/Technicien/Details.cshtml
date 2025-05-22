@@ -1,0 +1,39 @@
+﻿@model Technicien
+
+@{
+    ViewData["Title"] = "Détails du technicien";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Technicien</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Code
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CodeTech
+        </dd>
+        <dt class="col-sm-2">
+            Nom
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Nom
+        </dd>
+        <dt class="col-sm-2">
+            Prénom
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prenom
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.CodeTech" class="btn btn-warning">Modifier</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>

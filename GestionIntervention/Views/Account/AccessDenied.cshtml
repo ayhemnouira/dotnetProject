@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Accès Refusé";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div class="alert alert-danger">
+    Vous n'avez pas les autorisations nécessaires pour accéder à cette page.
+</div>
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Retour à l'accueil</a>
+
+# Views/Home/Index.cshtml
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<h1>Bienvenue dans Gestion Interventions</h1>
+<p>Utilisez le menu pour naviguer entre les différentes sections.</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>En tant qu'administrateur, vous pouvez accéder au tableau de bord pour voir les statistiques.</p>
+    <a asp-controller="Home" asp-action="AdminDashboard" class="btn btn-primary">Tableau de bord</a>
+}
+else
+{
+    <p>Vous pouvez consulter la liste des interventions et effectuer des recherches.</p>
+    <a asp-controller="Intervention" asp-action="Index" class="btn btn-primary">Voir les interventions</a>
+}

@@ -1,0 +1,111 @@
+﻿@model GestionIntervention.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Tableau de bord administrateur";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Clients</h5>
+                <p class="card-text display-4">@Model.TotalClients</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Techniciens</h5>
+                <p class="card-text display-4">@Model.TotalTechniciens</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Produits</h5>
+                <p class="card-text display-4">@Model.TotalProduits</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Interventions</h5>
+                <p class="card-text display-4">@Model.TotalInterventions</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Interventions par mois (@DateTime.Now.Year)
+            </div>
+            <div class="card-body">
+                <canvas id="interventionsChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Dernières interventions
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Technicien</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var intervention in Model.RecentInterventions)
+                        {
+                            <tr>
+                                <td>@intervention.DateInterv.ToShortDateString()</td>
+                                <td>@(intervention.Client != null ? $"{intervention.Client.Nom} {intervention.Client.Prenom}" : "N/A")</td>
+                                <td>@(intervention.Technicien != null ? $"{intervention.Technicien.Nom} {intervention.Technicien.Prenom}" : "N/A")</td>
+                                <td>@intervention.Statut</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('interventionsChart').getContext('2d');
+        var interventionsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+                datasets: [{
+                    label: 'Interventions par mois',
+                    data: @Json.Serialize(Model.InterventionsByMonth),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

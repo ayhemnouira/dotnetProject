@@ -1,0 +1,66 @@
+﻿@model List<GestionIntervention.Models.Client>
+
+@{
+    ViewData["Title"] = "Liste des Clients";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Rechercher par nom, prénom ou adresse" value="@ViewData["CurrentFilter"]" />
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+        </form>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="col-md-6 text-end">
+            <a asp-action="Create" class="btn btn-success">Ajouter un Client</a>
+        </div>
+    }
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Code Client</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Adresse</th>
+            <th>Code Postal</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.CodeClt</td>
+                <td>@client.Nom</td>
+                <td>@client.Prenom</td>
+                <td>@client.Adresse</td>
+                <td>@client.CP</td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@client.CodeClt" class="btn btn-sm btn-primary">Modifier</a>
+                        <a asp-action="Delete" asp-route-id="@client.CodeClt" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">Supprimer</a>
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        // Optional: Add JavaScript for enhanced client-side search or confirmation
+    </script>
+}

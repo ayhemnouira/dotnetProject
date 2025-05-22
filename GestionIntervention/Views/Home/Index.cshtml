@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Accueil";
+}
+
+<h1>Bienvenue dans Gestion Interventions</h1>
+<p>Utilisez le menu pour naviguer entre les différentes sections.</p>
+@if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+{
+    <p>En tant qu'administrateur, vous pouvez accéder au tableau de bord pour voir les statistiques.</p>
+    <a asp-controller="Home" asp-action="AdminDashboard" class="btn btn-primary">Tableau de bord</a>
+}
+else
+{
+    <p>Vous pouvez consulter la liste des interventions et effectuer des recherches.</p>
+    <a asp-controller="Intervention" asp-action="Index" class="btn btn-primary">Voir les interventions</a>
+}

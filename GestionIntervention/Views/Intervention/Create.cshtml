@@ -1,0 +1,73 @@
+﻿@model GestionIntervention.Models.Intervention
+
+@{
+    ViewData["Title"] = "Créer une intervention";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="DateInterv" class="control-label"></label>
+                <input asp-for="DateInterv" class="form-control" type="date" />
+                <span asp-validation-for="DateInterv" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CodeClt" class="control-label">Client</label>
+                <select asp-for="CodeClt" class="form-control">
+                    <option value="">Sélectionner un client</option>
+                    @foreach (var client in ViewBag.Clients)
+                    {
+                        <option value="@client.CodeClt">@client.Nom @client.Prenom</option>
+                    }
+                </select>
+                <span asp-validation-for="CodeClt" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ReferencePd" class="control-label">Produit</label>
+                <select asp-for="ReferencePd" class="form-control">
+                    <option value="">Sélectionner un produit</option>
+                    @foreach (var produit in ViewBag.Produits)
+                    {
+                        <option value="@produit.ReferencePd">@produit.Designation</option>
+                    }
+                </select>
+                <span asp-validation-for="ReferencePd" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CodeTech" class="control-label">Technicien</label>
+                <select asp-for="CodeTech" class="form-control">
+                    <option value="">Sélectionner un technicien</option>
+                    @foreach (var technicien in ViewBag.Techniciens)
+                    {
+                        <option value="@technicien.CodeTech">@technicien.Nom @technicien.Prenom</option>
+                    }
+                </select>
+                <span asp-validation-for="CodeTech" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Statut" class="control-label">Statut</label>
+                <select asp-for="Statut" class="form-control">
+                    <option value="">Sélectionner un statut</option>
+                    @foreach (var status in ViewBag.Statuses)
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+                <span asp-validation-for="Statut" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

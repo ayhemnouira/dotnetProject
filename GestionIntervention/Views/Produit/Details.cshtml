@@ -1,0 +1,36 @@
+﻿@model Produit
+
+@{
+    ViewData["Title"] = "Détails du produit";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Produit</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Référence
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ReferencePd
+        </dd>
+        <dt class="col-sm-2">
+            Désignation
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Designation
+        </dd>
+        <dt class="col-sm-2">
+            Prix
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Prix.ToString("C")
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ReferencePd" class="btn btn-warning">Modifier</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>

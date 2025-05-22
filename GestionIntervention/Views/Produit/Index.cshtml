@@ -1,0 +1,49 @@
+﻿@model IEnumerable<GestionIntervention.Models.Produit>
+
+@{
+    ViewData["Title"] = "Liste des produits";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success">Créer un nouveau produit</a>
+    </p>
+}
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Rechercher par désignation...">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+</form>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Référence</th>
+            <th>Désignation</th>
+            <th>Prix</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReferencePd</td>
+                <td>@item.Designation</td>
+                <td>@item.Prix.ToString("C")</td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ReferencePd" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.ReferencePd" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
